@@ -1,5 +1,5 @@
 import sqlite3
-from settings import DB_PATH
+from ..settings import DB_PATH
 
 def create_articles_table():
     with sqlite3.connect(DB_PATH) as conn:
