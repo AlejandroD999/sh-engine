@@ -1,5 +1,8 @@
 import os
+from  pathlib import Path
 
-DB_PATH = os.path.join(os.getcwd(), "data", "wiki.db") 
+BASE_DIR= Path(__file__).resolve().parent 
+
+DB_PATH = BASE_DIR / "data" / "wiki.db" 
 
 

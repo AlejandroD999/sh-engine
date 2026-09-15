@@ -2,6 +2,7 @@ import sqlite3
 from ..settings import DB_PATH
 
 def create_articles_table():
+
     with sqlite3.connect(DB_PATH) as conn:
         cur = conn.cursor()
 
@@ -18,6 +19,8 @@ def create_articles_table():
         cur.close()
 
 def insert_article(title, description, excerpt):
+    create_articles_table()
+
     if not title:
         raise "Article to insert must include a title"
     
