@@ -36,6 +36,23 @@ def insert_article(title, description, excerpt):
 
         cur.close()
 
+def fetch_articles():
+    query = """
+    SELECT title, description FROM articles
+    """
+        
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+
+        cur.execute(query)
+
+        data = cur.fetchall()
+
+    return data
+    
+    
+
 if __name__ == "__main__":
     create_articles_table()
     

@@ -1,7 +1,7 @@
 import requests
 from .db import create_articles_table, insert_article
 
-def fetch_articles(keyword):
+def fetch_api_data(keyword):
     if not keyword:
         print("A keyword must be provided")
         return
@@ -35,11 +35,4 @@ def parse_article(data):
                 article.get("title"),
                 article.get("description"),
                 article.get("excerpt"))
-
-
-
-if __name__ == "__main__":
-    jup = fetch_articles("jupiter")
-
-    parse_article(jup)
 
