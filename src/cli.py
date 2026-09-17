@@ -7,7 +7,7 @@ def setup_parser():
             epilog="Thank you for supporting this project")
 
     parser.add_argument("topic", action="store")
-    
+        
     return parser
 
 def parse(parser):

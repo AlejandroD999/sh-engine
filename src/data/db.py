@@ -36,16 +36,16 @@ def insert_article(title, description, excerpt):
 
         cur.close()
 
-def fetch_articles():
+def fetch_articles(topic: str):
     query = """
-    SELECT title, description FROM articles
+    SELECT title, description FROM articles WHERE instr(lower(title), lower(?)) > 0 
     """
         
     with sqlite3.connect(DB_PATH) as conn:
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
 
-        cur.execute(query)
+        cur.execute(query, (topic,))
 
         data = cur.fetchall()
 
