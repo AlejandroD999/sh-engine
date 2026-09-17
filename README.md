@@ -11,4 +11,9 @@ data: wikimedia API data
 
 > Focus: small-scope; get essentials 
 
+1. Indexing: get wikipedia data and store in database
+2. Ranking: accuracy to prompt
+    - use queue
+3. Retrieval: print output
+
 
