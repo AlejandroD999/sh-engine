@@ -1,12 +1,14 @@
 from src.data.wiki_api import fetch_api_data, parse_article
 from src.data.db import fetch_articles
+from src.cli import setup_parser, parse
 
-for i in range(10):
-    article_topic = input(f"Topic {i+1}:")
+def main():
+    parser = setup_parser()
 
-    data = fetch_api_data(article_topic)
-    parse_article(data)
+    args = parse(parser)
+
+    print(args.topic)
 
 
-
-
+if __name__ == "__main__":
+    main()
