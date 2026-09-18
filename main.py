@@ -5,9 +5,11 @@ from src.cli import setup_parser, parse
 def main():
     parser = setup_parser()
     args = parse(parser)
+    
+    articles = fetch_articles(args.topic)
 
-    for article in fetch_articles(args.topic):
-        print(article['title'])
+    for article in articles:
+        print(article[0])
 
 if __name__ == "__main__":
     main()

@@ -42,7 +42,6 @@ def fetch_articles(topic: str):
     """
         
     with sqlite3.connect(DB_PATH) as conn:
-        conn.row_factory = sqlite3.Row
         cur = conn.cursor()
 
         cur.execute(query, (topic,))
