@@ -2,9 +2,12 @@ from difflib import SequenceMatcher
 
 class Ranker:
     def __init__(self, data):
-        self.data = data
+        self._data = data
     
-    def find_ratio(self, title, keyword):
+    def get_data(self):
+        return self._data
+
+    def find_score(self, title, keyword):
         # TODO Exception handling? 
 
         title = title.strip().lower()
@@ -15,9 +18,9 @@ class Ranker:
     def sort(self, keyword):
         # score based on proximity to keyword
         # if 'matt' is keyword 'matt' has a score of 1, meanwhile mater is some other nomber of matchin letters
-        pass
+        for item in self._data:
+            ratio = self.find_score(item['title'], keyword)
+            item['score'] = ratio
         
-if __name__ == "__main__":
-    r = Ranker("")
+        
 
-    print(r.find_score("Some guy named Matt", "Matt"))
