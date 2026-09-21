@@ -9,9 +9,10 @@ def main():
     
     articles = fetch_articles(args.topic)
     
-    ranker = Ranker(articles)
+    ranker = Ranker(articles, args.topic)
 
-    ranker.sort(args.topic)
+    print(ranker.get_data())
+
 
 
 if __name__ == "__main__":
