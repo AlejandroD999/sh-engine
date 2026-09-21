@@ -36,6 +36,21 @@ def insert_article(title, description, excerpt):
 
         cur.close()
 
+def dict_factory(data: str):
+    # TODO Improve exeption handling
+    if not data:
+        return
+
+    dict_data = []
+
+    for item in data:
+        dict_data.append({k: item[k] for k in item.keys()})
+
+    return dict_data
+
+
+
+
 def fetch_articles(topic: str):
     query = """
     SELECT id, title, description FROM articles WHERE instr(lower(title), lower(?)) > 0 
@@ -43,14 +58,11 @@ def fetch_articles(topic: str):
         
     with sqlite3.connect(DB_PATH) as conn:
         conn.row_factory = sqlite3.Row
-
         cur = conn.cursor()
-
         cur.execute(query, (topic,))
-
+        
         data = cur.fetchall()
-
-    return data
+    return dict_factory(data)
     
     
 
