@@ -9,7 +9,7 @@ def main():
     articles = fetch_articles(args.topic)
 
     for article in articles:
-        print(article[0])
+        print(article['id'])
 
 if __name__ == "__main__":
     main()
