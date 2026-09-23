@@ -11,7 +11,13 @@ def main():
     
     ranker = Ranker(articles, args.topic)
 
-    print(ranker.get_data())
+    data = ranker.sorted
+    
+    if not data:
+        return
+
+    for article in data:
+        print(article['title'], article['score'])
 
 
 
