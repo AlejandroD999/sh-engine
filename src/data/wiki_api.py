@@ -28,11 +28,24 @@ def fetch_api_data(keyword):
     except requests.exceptions.RequestException as errex:
         print("Exception request")
         
-def parse_article(data):
+def save_data(data):
     
     for article in data.get("pages"):
         insert_article(
                 article.get("title"),
                 article.get("description"),
                 article.get("excerpt"))
+
+def get_new_articles(keyword):
+    data = fetch_api_data(keyword)
+
+    if not data['pages']:
+        return False
+
+    parsed = save_data(data)
+
+    return True
+
+     
+
 

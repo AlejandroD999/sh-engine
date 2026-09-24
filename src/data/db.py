@@ -23,7 +23,7 @@ def insert_article(title, description, excerpt):
 
     if not title:
         raise "Article to insert must include a title"
-    
+
     with sqlite3.connect(DB_PATH) as conn:
         cur = conn.cursor()
         
@@ -33,7 +33,7 @@ def insert_article(title, description, excerpt):
         except sqlite3.IntegrityError as e:
             print(f"Database constraint integrity error: {e}")
             conn.rollback()
-
+    
         cur.close()
 
 def dict_factory(data: str):
@@ -49,8 +49,6 @@ def dict_factory(data: str):
     return dict_data
 
 
-
-
 def fetch_articles(topic: str):
     query = """
     SELECT id, title, description FROM articles WHERE instr(lower(title), lower(?)) > 0 
@@ -63,10 +61,3 @@ def fetch_articles(topic: str):
         
         data = cur.fetchall()
     return dict_factory(data)
-    
-    
-
-if __name__ == "__main__":
-    create_articles_table()
-    
-    insert_article("jupiter", "A planet of solar system", "bla bla bla")
