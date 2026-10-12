@@ -1,8 +1,11 @@
 import sqlite3
 
+def connect_to_db():
+    return sqlite3.connect("pages.db")
+
 def create_pages_table():
 
-    with sqlite3.connect("articles.db") as conn:
+    with connect_to_db() as conn: 
         cur = conn.cursor()
 
         cur.execute("""
@@ -15,7 +18,34 @@ def create_pages_table():
 
         cur.close()
 
-if __name__ == "__main__":
+def insert_page(title, timestamp, text):
     create_pages_table()
 
+    if not title:
+        return
+    
+    query = """INSERT INTO pages (title, timestamp, text) VALUES (?, ?, ?)"""
 
+    with connect_to_db() as conn:
+        cur = conn.cursor()
+        
+        cur.execute(query, (title, timestamp, text)) 
+
+        cur.close()
+
+def get_page_data():
+
+    with connect_to_db() as conn:
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM pages")
+        page_data = cur.fetchall()
+
+        cur.close()
+
+    return page_data
+            
+
+if __name__ == "__main__":
+    
+    print(get_page_data())
