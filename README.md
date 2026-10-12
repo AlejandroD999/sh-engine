@@ -1,4 +1,6 @@
+## TODO
 
+- Index wiki_dumps.xml into database
 
 #### Source
 The data used to empower this project are Wikimedia Dumps. The exact index
