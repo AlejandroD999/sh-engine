@@ -20,21 +20,26 @@ def create_pages_table():
 
 def insert_page(title, timestamp, text):
     create_pages_table()
-
-    if not title:
-        return
     
+    if not title:
+        print("Error: title not found")
+        raise
+
     query = """INSERT INTO pages (title, timestamp, text) VALUES (?, ?, ?)"""
 
     with connect_to_db() as conn:
         cur = conn.cursor()
         
-        cur.execute(query, (title, timestamp, text)) 
+        try:
+            cur.execute(query, (title, timestamp, text)) 
+
+        except sqlite3.IntegrityError as e:
+            print(f"Database error: {e}")
+            conn.rollback()
 
         cur.close()
 
 def get_page_data():
-
     with connect_to_db() as conn:
         cur = conn.cursor()
 
