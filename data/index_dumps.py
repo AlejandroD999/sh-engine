@@ -16,10 +16,12 @@ def extract_xml_data(root, prefix):
         page_data.append(
                 {"title": title.text, "timestamp": timestamp.text, "text": text.text}
                 )
+
+    print("XML Data Extracted")
     return page_data
 
 def index_to_db(pages):
-
+    count = 0
     if len(pages) < 1:
         print("Indexing error: pages not provided")
         return
@@ -31,6 +33,9 @@ def index_to_db(pages):
                 timestamp=page['timestamp'], 
                 text=page['text']
                 )
+
+        count += 1
+        print("Pages Indexed:", count)
     
 
 def index():
