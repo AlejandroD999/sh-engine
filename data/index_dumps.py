@@ -33,10 +33,17 @@ def index_to_db(pages):
                 )
     
 
-tree = ET.parse("test_dumps.xml")
-root = tree.getroot()
+def index():
+    tree = ET.parse("wiki_dumps.xml")
+    root = tree.getroot()
 
-pages = extract_xml_data(root, ns)
+    pages = extract_xml_data(root, ns)
 
-index_to_db(pages)
+    index_to_db(pages)
+
+if __name__ == "__main__":
+    index()
+
+
+
 
