@@ -1,11 +1,15 @@
 from spellchecker import SpellChecker
 
 class QueryProcessor:
+    # Architecural style: Pipeline
     def __init__(self, query):
         self.query = query
         self.checker = SpellChecker(language="en")
         
         self.run()
+    
+    def segment_query(self):
+        return self.query.split()
 
     def spell_check(self, split_query):
         long_word_length = 7
@@ -27,12 +31,12 @@ class QueryProcessor:
     
     def run(self):
         # Transforms and filters query
-        split_query = input("Query: ").split() 
-
+        split_query = self.segment_query() 
+        
         corrected = self.spell_check(split_query)
 
         print(corrected)
 
 
 if __name__ == "__main__":
-    qp = QueryProcessor("Sofe gey wjo runs")
+    qp = QueryProcessor("Pizza tastses awsome")
