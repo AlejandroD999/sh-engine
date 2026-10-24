@@ -12,12 +12,12 @@ class QueryProcessor:
         return self.query.split()
 
     def spell_check(self, split_query):
-        long_word_length = 7
+        long_word_length = 4
 
 
         for idx, word in enumerate(split_query):
             # Toggle check distance: according to word length
-            self.checker.distance = 2 if len(word) <= long_word_length else 1
+            self.checker.distance = 1 if len(word) <= long_word_length else 2
 
             if word not in self.checker:
                 corr_word = self.checker.correction(word)
@@ -39,4 +39,4 @@ class QueryProcessor:
 
 
 if __name__ == "__main__":
-    qp = QueryProcessor("Pizza tastses awsome")
+    qp = QueryProcessor("Pizza tastses awsome, ct and minws")
