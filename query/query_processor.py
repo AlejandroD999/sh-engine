@@ -1,3 +1,4 @@
+from nltk.stem import WordNetLemmatizer
 from spellchecker import SpellChecker
 
 class QueryProcessor:
@@ -7,7 +8,7 @@ class QueryProcessor:
         self.checker = SpellChecker(language="en")
         
         self.run()
-    
+     
     def segment_query(self):
         return self.query.split()
 
@@ -27,15 +28,29 @@ class QueryProcessor:
         
         return split_query
         
+    def lemmatize(self, query):
+        
+        if len(query) < 1 or type(query) != list:
+            print("Stemming error")
+            return
+
+        wln = WordNetLemmatizer()
+        
+        for idx, word in enumerate(query):
+            lemma = wln.lemmatize(word)
+
+            print(lemma)
+            
 
     
     def run(self):
         # Transforms and filters query
         split_query = self.segment_query() 
         
-        corrected = self.spell_check(split_query)
+        corrected_query = self.spell_check(split_query)
 
-        print(corrected)
+        lemmatized_query = self.lemmatize(corrected_query)
+
 
 
 if __name__ == "__main__":
