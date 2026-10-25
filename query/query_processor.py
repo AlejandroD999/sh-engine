@@ -1,10 +1,11 @@
-from nltk.stem import WordNetLemmatizer
+from nltk.stem.snowball import SnowballStemmer 
 from spellchecker import SpellChecker
 
 class QueryProcessor:
     # Architecural style: Pipeline
     def __init__(self, query):
         self.query = query
+        self.language = "english" 
         self.checker = SpellChecker(language="en")
         
         self.run()
@@ -28,30 +29,43 @@ class QueryProcessor:
         
         return split_query
         
-    def lemmatize(self, query):
+    def stem(self, query):
+        snowball = SnowballStemmer(self.language)
         
-        if len(query) < 1 or type(query) != list:
-            print("Stemming error")
+        # Basic Error Handling
+        if len(query) < 1:
+            print("Stem error: a query must be provided")
             return
 
-        wln = WordNetLemmatizer()
+        if type(query) != list:
+            print("Stem error: query must be a list")
+            return
         
+        # Stem process
         for idx, word in enumerate(query):
-            lemma = wln.lemmatize(word)
+            stemmed = snowball.stem(word)
+            query[idx] = stemmed 
 
-            print(lemma)
-            
-
+        return query
+         
     
     def run(self):
         # Transforms and filters query
+        
+        # Phase 1: Segment query
         split_query = self.segment_query() 
         
+        # Phase 2: Spellcheck
         corrected_query = self.spell_check(split_query)
+        
+        # TODO Phase 3: FIlter stop words
 
-        lemmatized_query = self.lemmatize(corrected_query)
+        # Phase 4: Stem query
+        stemmed_query = self.stem(corrected_query)
+    
 
+        print(stemmed_query)
 
 
 if __name__ == "__main__":
-    qp = QueryProcessor("Pizza tastses awsome, ct and minws")
+    qp = QueryProcessor("Runing quicly throgh the beutiful mountians")
