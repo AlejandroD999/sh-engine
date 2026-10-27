@@ -4,16 +4,24 @@ from spellchecker import SpellChecker
 class QueryProcessor:
     # Architecural style: Pipeline
     def __init__(self, query):
+        # TODO Language detection
+
         self.query = query
         self.language = "english" 
         self.checker = SpellChecker(language="en")
         
-        self.run()
+        self.__processed = self.process()
      
     def segment_query(self):
-        return self.query.split()
+        return self.query.split() if type(self.query) == str else None
 
     def spell_check(self, split_query):
+        # TODO Improve spell check accuracy
+
+        if not split_query:
+            print("Spell check error: missing query")
+            return 
+
         long_word_length = 4
 
 
@@ -33,7 +41,7 @@ class QueryProcessor:
         snowball = SnowballStemmer(self.language)
         
         # Basic Error Handling
-        if len(query) < 1:
+        if not query:
             print("Stem error: a query must be provided")
             return
 
@@ -49,23 +57,22 @@ class QueryProcessor:
         return query
          
     
-    def run(self):
+    def process(self):
         # Transforms and filters query
         
         # Phase 1: Segment query
         split_query = self.segment_query() 
-        
+             
         # Phase 2: Spellcheck
         corrected_query = self.spell_check(split_query)
         
-        # TODO Phase 3: FIlter stop words
+        # TODO Phase 3: Filter stop words
 
         # Phase 4: Stem query
         stemmed_query = self.stem(corrected_query)
     
+        return stemmed_query
 
-        print(stemmed_query)
+    def get_processed(self):
+        return self.__processed 
 
-
-if __name__ == "__main__":
-    qp = QueryProcessor("Runing quicly throgh the beutiful mountians")
