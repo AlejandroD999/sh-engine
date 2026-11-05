@@ -1,4 +1,5 @@
 import sqlite3
+import re
 
 def connect_to_db():
     return sqlite3.connect("pages.db")
@@ -41,6 +42,7 @@ def insert_page(title, timestamp, text):
 
 def get_page_data():
     with connect_to_db() as conn:
+        conn.row_factory = sqlite3.Row
         cur = conn.cursor()
 
         cur.execute("SELECT * FROM pages")
@@ -49,8 +51,22 @@ def get_page_data():
         cur.close()
 
     return page_data
-            
+
+def extract_references(title, article_text: str):
+    pattern = r'\[\[([^\]|]+)(?:\|[^\]]+)?\]\]'
+
+    links = re.findall(pattern, article_text)
+    
+    return {title: links}
+
 
 if __name__ == "__main__":
     
-    print(get_page_data())
+    data = get_page_data()
+    refs = extract_references(data[0]['title'], data[0]['text'])
+
+    print(refs.keys()) 
+    print()
+
+    for link in refs['April']:
+        print(link)
