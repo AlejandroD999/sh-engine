@@ -19,6 +19,27 @@ def create_pages_table():
 
         cur.close()
 
+def create_links_table():
+
+    with connect_to_db() as conn:
+        cur = conn.cursor()
+
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS links (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            source_id INTEGER NOT NULL,
+            target_id INTEGER NOT NULL,
+            FOREIGN KEY (source_id) REFERENCES pages(id),
+            FOREIGN KEY (target_id) REFERENCES pages(id),
+            UNIQUE (source_id, target_id)
+
+        )""")
+        
+        # TODO Create index (below) after inserting all links (takes more space and time but efficient lookups)
+        # cur.execute("CREATE INDEX IF NOT EXISTS idx_links_target ON links(target_id)")
+
+        cur.close()
+
 def insert_page(title, timestamp, text):
     create_pages_table()
     
@@ -40,6 +61,7 @@ def insert_page(title, timestamp, text):
 
         cur.close()
 
+# Get page data and return as a dict object
 def get_page_data():
     with connect_to_db() as conn:
         conn.row_factory = sqlite3.Row
@@ -52,7 +74,8 @@ def get_page_data():
 
     return page_data
 
-def extract_references(title, article_text: str):
+def extract_links(title, article_text: str):
+
     pattern = r'\[\[([^\]|]+)(?:\|[^\]]+)?\]\]'
 
     links = re.findall(pattern, article_text)
@@ -61,12 +84,4 @@ def extract_references(title, article_text: str):
 
 
 if __name__ == "__main__":
-    
-    data = get_page_data()
-    refs = extract_references(data[0]['title'], data[0]['text'])
-
-    print(refs.keys()) 
-    print()
-
-    for link in refs['April']:
-        print(link)
+    create_links_table()    
