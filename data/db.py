@@ -2,7 +2,7 @@ import sqlite3
 import re
 
 def connect_to_db():
-    return sqlite3.connect("pages.db")
+    return sqlite3.connect("articles.db")
 
 def create_pages_table():
 
