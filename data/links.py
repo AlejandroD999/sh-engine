@@ -24,6 +24,20 @@ def create_links_table():
 
         cur.close()
 
+def insert_link(source_id, target_id):
+    create_links_table()
+
+    if not source_id or not target_id:
+        print("Error: must provide source_id and target_id")
+        return
+
+    with connect_to_db() as conn:
+        cur = conn.cursor()
+
+        cur.execute("INSERT INTO links (source_id, target_id) VALUES (?, ?)", (source_id, target_id))
+
+        cur.close()
+
 def extract_links(title, article_text: str):
     
     if not title or not article_text:
@@ -54,4 +68,7 @@ def create_links():
     # Find source and target references in DB: NULL if not exists
 
     # Insert Links
+
+if __name__ == '__main__':
+    insert_link(4, 10)  
 

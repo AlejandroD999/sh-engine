@@ -41,6 +41,8 @@ def insert_page(title, timestamp, text):
 
 # Get page data and return as a dict object
 def get_page_data():
+    create_pages_table()
+
     with connect_to_db() as conn:
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
