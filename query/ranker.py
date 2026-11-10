@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 #   - When finishing, make own if needed
 # demo: use pagerank class from networkx
 
+# Ranking happens on its own schedule (not during query)  
 '''
 1. Create links table in pages.db & parse links from articles to links as connections (digraph)
     - get text from article: find all [[..]] <- links
