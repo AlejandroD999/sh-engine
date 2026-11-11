@@ -60,14 +60,20 @@ def create_links():
 
     # Iterate & extract links
     for page in pages:
-        page_title = page['title']
 
         try:
             links = extract_links(page['text'])
+
         except Exception:
             print("Error while creating links")
             continue 
-        
+       
+        for link in links:
+            # Is there an article in db that matches:
+                # No? Insert as null
+                # Yes? Get id 
+            # insert(source_id -> page['id'], target_id -> NULL or link_id
+            pass
         refs[page['id']] = links 
         
 
@@ -75,6 +81,7 @@ def create_links():
     # Find source and target references in DB: NULL if not exists
     
     # Insert Links
+
 
 if __name__ == '__main__':
     links = create_links()
