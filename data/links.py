@@ -1,5 +1,5 @@
 from db import connect_to_db
-from pages import get_page_data
+from pages import get_page_data, get_page_titles
 import sqlite3 
 import re
 
@@ -38,37 +38,45 @@ def insert_link(source_id, target_id):
 
         cur.close()
 
-def extract_links(title, article_text: str):
-    
-    if not title or not article_text:
-        return 
+def extract_links(article_text: str):
+    links_set = set() 
+    if not article_text:
+        return set() 
 
     pattern = r'\[\[([^\]|]+)(?:\|[^\]]+)?\]\]'
     links = re.findall(pattern, article_text)
+
+    for link in links:
+        links_set.add(link)
     
-    return {title: links}
+    return links_set 
 
 def create_links():
     refs  = {}
 
     # Get page data
     pages = get_page_data() 
+    titles = get_page_titles()
 
     # Iterate & extract links
     for page in pages:
-        title = page['title']
+        page_title = page['title']
 
         try:
-            refs[page['id']] = extract_links(title, page['text'])
-
+            links = extract_links(page['text'])
         except Exception:
             print("Error while creating links")
+            continue 
+        
+        refs[page['id']] = links 
+        
 
     return refs
     # Find source and target references in DB: NULL if not exists
-
+    
     # Insert Links
 
 if __name__ == '__main__':
-    insert_link(4, 10)  
-
+    links = create_links()
+    
+    print((links[40]))
