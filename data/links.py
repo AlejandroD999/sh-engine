@@ -24,22 +24,26 @@ def create_links_table():
 
         cur.close()
 
-def insert_link(source_id, target_id):
+def insert_links(row_data: list):
     create_links_table()
 
-    if not source_id or not target_id:
+    if not row_data: 
         print("Error: must provide source_id and target_id")
         return
 
     with connect_to_db() as conn:
         cur = conn.cursor()
+        
+        try:
+            cur.executemany("INSERT OR IGNORE INTO links (source_id, target_id) VALUES (?, ?)", row_data)
 
-        cur.execute("INSERT INTO links (source_id, target_id) VALUES (?, ?)", (source_id, target_id))
-
+        except sqlite3.IntegrityError as e:
+            print(f"Error during DB operation: {e}")
         cur.close()
 
 def extract_links(article_text: str):
     links_set = set() 
+
     if not article_text:
         return set() 
 
@@ -51,38 +55,30 @@ def extract_links(article_text: str):
     
     return links_set 
 
-def make_links():
+def form_links():
 
     # Get page data
+    print("Getting data...")
     pages = get_page_data() 
-    titles = get_page_titles()
+    title_to_id = {row['title']: row['id'] for row in get_page_titles()} 
 
-    # Iterate & extract links
+    # (source_id, target_id) rows
+    rows = []
+    print("Forming Links...")
     for page in pages:
+        for link in extract_links(page['text']):
+            target_id = title_to_id.get(link)
+            if target_id and target_id != page['id']: 
+                rows.append([page['id'], target_id]) 
 
-        try:
-            links = extract_links(page['text'])
+    print("Inserting Links")
+    insert_links(rows)
+    print("Successfully formed links")
 
-        except Exception:
-            print("Error while creating links")
-            continue 
+
         
-        # TODO Improve speed
-        for link in links:
-            # TODO Make conditional based on titles (line 58)
-            # Use the cheaper route
-            return
-            if link:
-                insert_link(page['id'], target_data[0])
-            else:
-                continue
 
 if __name__ == '__main__':
-    titles = get_page_titles()
+    links = form_links()
 
-    print(titles[0]['id'])
-'''
-    links = make_links()
-    
-    print((links[40]))
-    '''
+
