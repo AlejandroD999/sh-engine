@@ -58,6 +58,7 @@ def get_page_titles():
     create_pages_table()
 
     with connect_to_db() as conn:
+        conn.row_factory = sqlite3.Row
         cur = conn.cursor()
 
         cur.execute("SELECT id, title FROM pages")
@@ -67,3 +68,4 @@ def get_page_titles():
         cur.close()
 
     return titles
+

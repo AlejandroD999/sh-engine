@@ -1,5 +1,5 @@
 from db import connect_to_db
-from pages import get_page_data, get_page_titles
+from pages import get_page_data, get_page_titles 
 import sqlite3 
 import re
 
@@ -51,8 +51,7 @@ def extract_links(article_text: str):
     
     return links_set 
 
-def create_links():
-    refs  = {}
+def make_links():
 
     # Get page data
     pages = get_page_data() 
@@ -67,23 +66,23 @@ def create_links():
         except Exception:
             print("Error while creating links")
             continue 
-       
-        for link in links:
-            # Is there an article in db that matches:
-                # No? Insert as null
-                # Yes? Get id 
-            # insert(source_id -> page['id'], target_id -> NULL or link_id
-            pass
-        refs[page['id']] = links 
         
-
-    return refs
-    # Find source and target references in DB: NULL if not exists
-    
-    # Insert Links
-
+        # TODO Improve speed
+        for link in links:
+            # TODO Make conditional based on titles (line 58)
+            # Use the cheaper route
+            return
+            if link:
+                insert_link(page['id'], target_data[0])
+            else:
+                continue
 
 if __name__ == '__main__':
-    links = create_links()
+    titles = get_page_titles()
+
+    print(titles[0]['id'])
+'''
+    links = make_links()
     
     print((links[40]))
+    '''
