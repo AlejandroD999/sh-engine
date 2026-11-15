@@ -1,7 +1,8 @@
+from data.links import get_links
 import networkx as nx
 import matplotlib.pyplot as plt
 
-# TODO Make demo pagerank (don't make the wheel)
+# TODO Make demo pagerank (don't remake the wheel)
 #   - When finishing, make own if needed
 # demo: use pagerank class from networkx
 
@@ -15,12 +16,17 @@ import matplotlib.pyplot as plt
 3. PageRank
 4. Return sorted pages
 '''
-connections = [[1, 2], [2, 3], [3, 1], [4, 1], [3, 2]]
 
-G = nx.DiGraph(connections)
+def curate_links(links: dict):
+    return links
 
-page_rank = nx.pagerank(G, alpha=0.85)
+if __name__ == "__main__":
+    connections = [[1, 2], [2, 3], [3, 1], [4, 1], [3, 2]]
 
-for item in page_rank.items():
-    print(item)
+    G = nx.DiGraph(connections)
+
+    page_rank = nx.pagerank(G, alpha=0.85)
+
+    for item in page_rank.items():
+        print(item)
 

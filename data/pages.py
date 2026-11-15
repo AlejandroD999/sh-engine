@@ -1,4 +1,4 @@
-from db import connect_to_db 
+from .db import connect_to_db 
 import sqlite3
 
 # Pages is base: no references to other table scripts (e.g links.py)

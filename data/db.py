@@ -1,8 +1,9 @@
 import sqlite3
 import re
 
+# TODO Fix import paths: possibly cretate paths.py
 def connect_to_db():
-    return sqlite3.connect("articles.db")
+    return sqlite3.connect("data/articles.db")
 
 def create_pages_table():
 
@@ -36,7 +37,7 @@ def create_links_table():
         )""")
         
         # TODO Create index (below) after inserting all links (takes more space and time but efficient lookups)
-        # cur.execute("CREATE INDEX IF NOT EXISTS idx_links_target ON links(target_id)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_links_target ON links(target_id)")
 
         cur.close()
 

@@ -1,5 +1,5 @@
-from db import connect_to_db
-from pages import get_pages, get_page_titles 
+from .db import connect_to_db
+from .pages import get_pages, get_page_titles 
 import sqlite3 
 import re
 
@@ -77,7 +77,7 @@ def form_links():
 
 def get_links():
     create_links_table()
-    
+    print("Getting links...")
     with connect_to_db() as conn:
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
