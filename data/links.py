@@ -75,9 +75,20 @@ def form_links():
     insert_links(rows)
     print("Successfully formed links")
 
+def get_links():
+    create_links_table()
+    
+    with connect_to_db() as conn:
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+        
+        cur.execute("SELECT * FROM links")
+        links = cur.fetchall()
+
+        cur.close()
+    return links
         
 
-if __name__ == '__main__':
-    links = form_links()
+
 
 
