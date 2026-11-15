@@ -1,5 +1,5 @@
 from db import connect_to_db
-from pages import get_page_data, get_page_titles 
+from pages import get_pages, get_page_titles 
 import sqlite3 
 import re
 
@@ -59,7 +59,7 @@ def form_links():
 
     # Get page data
     print("Getting data...")
-    pages = get_page_data() 
+    pages = get_pages() 
     title_to_id = {row['title']: row['id'] for row in get_page_titles()} 
 
     # (source_id, target_id) rows
@@ -74,7 +74,6 @@ def form_links():
     print("Inserting Links")
     insert_links(rows)
     print("Successfully formed links")
-
 
         
 

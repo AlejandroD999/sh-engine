@@ -40,7 +40,7 @@ def insert_page(title, timestamp, text):
         cur.close()
 
 # Get page data and return as a dict object
-def get_page_data():
+def get_pages():
     create_pages_table()
 
     with connect_to_db() as conn:
