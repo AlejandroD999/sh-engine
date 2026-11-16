@@ -79,10 +79,9 @@ def get_links():
     create_links_table()
     print("Getting links...")
     with connect_to_db() as conn:
-        conn.row_factory = sqlite3.Row
         cur = conn.cursor()
         
-        cur.execute("SELECT * FROM links")
+        cur.execute("SELECT source_id, target_id FROM links")
         links = cur.fetchall()
 
         cur.close()
