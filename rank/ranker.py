@@ -6,27 +6,10 @@ import matplotlib.pyplot as plt
 #   - When finishing, make own if needed
 # demo: use pagerank class from networkx
 
-'''
-1. Create links table in pages.db & parse links from articles to links as connections (digraph)
-    - get text from article: find all [[..]] <- links
-        - if pipe ("|"): get text after pipe (it's the link)
-        - insert connection into links page (source_id, target_id)
-
-2. use links to create DiGraph
-3. PageRank
-4. Return sorted pages
-'''
-
-def curate_links(links: dict):
-    return links
-
-if __name__ == "__main__":
-    connections = [[1, 2], [2, 3], [3, 1], [4, 1], [3, 2]]
-
-    G = nx.DiGraph(connections)
-
-    page_rank = nx.pagerank(G, alpha=0.85)
-
-    for item in page_rank.items():
-        print(item)
+def rank(connections):
+    if not connections:
+        return 
+    
+    graph = nx.DiGraph(connections)
+    return nx.pagerank(graph, alpha=0.85)
 
