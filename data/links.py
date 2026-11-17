@@ -75,7 +75,7 @@ def form_links():
     insert_links(rows)
     print("Successfully formed links")
 
-def get_links():
+def get_graph_conns():
     create_links_table()
     print("Getting links...")
     with connect_to_db() as conn:

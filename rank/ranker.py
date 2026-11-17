@@ -1,4 +1,4 @@
-from data.links import get_links
+from data.links import get_graph_conns
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 def rank(connections):
     if not connections:
         return 
+
+    # TODO Leave digraph blank on init. Then, add nodes from page_ids and edges from connections
     
     graph = nx.DiGraph(connections)
     return nx.pagerank(graph, alpha=0.85)
