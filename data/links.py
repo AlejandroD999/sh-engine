@@ -1,5 +1,5 @@
 from .db import connect_to_db
-from .pages import get_pages, get_page_titles 
+from .pages import get_pages, get_titles 
 import sqlite3 
 import re
 
@@ -41,6 +41,7 @@ def insert_links(row_data: list):
             print(f"Error during DB operation: {e}")
         cur.close()
 
+# TODO Improve: extraction not accurate
 def extract_links(article_text: str):
     links_set = set() 
 
@@ -60,11 +61,11 @@ def form_links():
     # Get page data
     print("Getting data...")
     pages = get_pages() 
-    title_to_id = {row['title']: row['id'] for row in get_page_titles()} 
+    title_to_id = {row['title']: row['id'] for row in get_pages_titles()} 
 
     # (source_id, target_id) rows
-    rows = []
     print("Forming Links...")
+    rows = []
     for page in pages:
         for link in extract_links(page['text']):
             target_id = title_to_id.get(link)
@@ -85,9 +86,9 @@ def get_graph_conns():
         links = cur.fetchall()
 
         cur.close()
+    print("Links retrieved")
     return links
         
 
-
-
-
+if __name__ == "__main__":
+    get_pages_titles()

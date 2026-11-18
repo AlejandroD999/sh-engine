@@ -55,7 +55,7 @@ def get_pages():
 
     return page_data
 
-def get_page_titles():
+def get_titles():
     create_pages_table()
 
     with connect_to_db() as conn:
@@ -69,4 +69,23 @@ def get_page_titles():
         cur.close()
 
     return titles
+
+def get_ids():
+    create_pages_table()
+
+    with connect_to_db() as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT id FROM pages")
+
+        ids = cur.fetchall()
+
+        cur.close()
+    return ids
+
+
+
+
+
+
+
 
