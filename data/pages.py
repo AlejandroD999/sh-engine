@@ -18,6 +18,7 @@ def create_pages_table():
 
         cur.close()
 
+# TODO Make an execute many 
 def insert_page(title, timestamp, text):
     create_pages_table()
     

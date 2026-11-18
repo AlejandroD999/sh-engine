@@ -1,5 +1,5 @@
 from query.query_processor import QueryProcessor
-from data.links import get_links 
+from data.links import get_graph_conns
 from rank.ranker import rank 
 
 ''' Query processor example
