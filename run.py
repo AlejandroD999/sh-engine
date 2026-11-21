@@ -1,14 +1,9 @@
+from query.cli import setup_parser, parse
 from query.query_processor import QueryProcessor
-from data.links import get_graph_conns
-from data.pages import get_titles
-from rank.ranker import rank 
 
-''' Query processor example
-user_query = input("Query: ")
+parser = setup_parser()
+parsed = parse(parser)
 
-processor = QueryProcessor(user_query)
+processor = QueryProcessor(parsed.query)
+
 print(processor.get_processed())
-'''
-
-conns = get_graph_conns()
-ranked = rank(conns)
