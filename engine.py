@@ -11,7 +11,11 @@ class SearchEngine:
     def run(self):
         processor = QueryProcessor(self.query)
         processed = processor.process()
-        print(processed)
 
+        # TODO Grab articles based on query
+
+        # TODO Rank articles
+
+        # TODO Return top articles (Maybe title of top 20)
 
 

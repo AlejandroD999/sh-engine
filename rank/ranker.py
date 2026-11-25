@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 def rank(connections):
     # TODO Improve ranking: all pages have same score
+
     if not connections:
         return 
     page_ids = get_ids()
@@ -20,3 +21,5 @@ def rank(connections):
 
     return nx.pagerank(graph, alpha=0.85)
 
+
+# TODO Insert rank scores into each article
