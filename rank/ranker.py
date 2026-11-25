@@ -1,7 +1,6 @@
 from data.links import get_graph_conns
 from data.pages import get_ids
 import networkx as nx
-import matplotlib.pyplot as plt
 
 # TODO Make demo pagerank (don't remake the wheel)
 #   - When finishing, make own if needed
