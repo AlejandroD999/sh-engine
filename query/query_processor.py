@@ -9,8 +9,6 @@ class QueryProcessor:
         self.query = query
         self.language = "english" 
         self.checker = SpellChecker(language="en")
-        
-        self.__processed = self.process()
      
     def segment_query(self):
         return self.query.split() if type(self.query) == str else None
@@ -71,8 +69,5 @@ class QueryProcessor:
         # Phase 4: Stem query
         stemmed_query = self.stem(corrected_query)
     
-        return stemmed_query
-
-    def get_processed(self):
-        return self.__processed 
+        return " ".join(stemmed_query)
 

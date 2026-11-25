@@ -10,4 +10,8 @@ class SearchEngine:
 
     def run(self):
         processor = QueryProcessor(self.query)
+        processed = processor.process()
+        print(processed)
+
+
 
