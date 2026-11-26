@@ -13,7 +13,8 @@ def create_pages_table():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL UNIQUE,
             timestamp TEXT,
-            text TEXT)
+            text TEXT,
+            score REAL)
         """)
 
         cur.close()
@@ -81,7 +82,6 @@ def get_ids():
 
         cur.close()
     return ids
-
 
 
 
