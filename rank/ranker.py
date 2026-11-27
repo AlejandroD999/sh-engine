@@ -1,4 +1,3 @@
-from data.links import get_graph_conns
 from data.pages import get_ids
 import networkx as nx
 

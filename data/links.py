@@ -61,7 +61,7 @@ def form_links():
     # Get page data
     print("Getting data...")
     pages = get_pages() 
-    title_to_id = {row['title']: row['id'] for row in get_pages_titles()} 
+    title_to_id = {row['title']: row['id'] for row in get_titles()} 
 
     # (source_id, target_id) rows
     print("Forming Links...")
@@ -78,6 +78,7 @@ def form_links():
 
 def get_graph_conns():
     create_links_table()
+
     print("Getting links...")
     with connect_to_db() as conn:
         cur = conn.cursor()
@@ -88,7 +89,3 @@ def get_graph_conns():
         cur.close()
     print("Links retrieved")
     return links
-        
-
-if __name__ == "__main__":
-    get_pages_titles()

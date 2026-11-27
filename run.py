@@ -1,12 +1,18 @@
 from query.cli import setup_parser, parse
 from query.query_processor import QueryProcessor
 from engine import SearchEngine
-from data.pages import create_pages_table
+
+from data.links import get_graph_conns
+from rank.ranker import rank
+from data.pages import insert_scores
+
 """
 parser = setup_parser()
 parsed = parse(parser)
 
 shen = SearchEngine(parsed.query)
 """
+conns = get_graph_conns()
+ranked = rank(conns)
 
-create_pages_table()
+insert_scores(ranked)

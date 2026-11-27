@@ -41,6 +41,27 @@ def insert_page(title, timestamp, text):
 
         cur.close()
 
+# Insert ranked scores
+def insert_scores(scores):
+    create_pages_table()
+
+    if not scores:
+        print("Scores data not provided")
+        return
+
+    query = "UPDATE pages SET score=? WHERE id=?"
+    scores_data = [(score, id_) for id_, score in scores.items()]
+
+    with connect_to_db() as conn:
+        cur = conn.cursor()
+        cur.executemany(query, scores_data)
+
+        cur.close()
+
+
+
+
+
 # Get page data and return as a dict object
 def get_pages():
     create_pages_table()
@@ -78,7 +99,7 @@ def get_ids():
         cur = conn.cursor()
         cur.execute("SELECT id FROM pages")
 
-        ids = cur.fetchall()
+        ids = [row[0] for row in cur.fetchall()]
 
         cur.close()
     return ids
